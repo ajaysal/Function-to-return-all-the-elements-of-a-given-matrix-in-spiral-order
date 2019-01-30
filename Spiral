@@ -1,0 +1,71 @@
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+/*
+ * Complete the 'matrixVortex' function below.
+ *
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts 2D_INTEGER_ARRAY matrix as parameter.
+ */
+
+function matrixVortex(matrix) {
+
+    var result = [];
+    var row  =0,column = 0;
+    var index = 0;
+    var noofRows = matrix.length;
+    var noofColumns = matrix[0].length;
+    
+    while(row < noofRows && column < noofColumns){
+     
+        for(var i =column;i< noofColumns;++i )  {
+            result.push(matrix[row][i]);
+        } 
+        row=row +1;
+        
+        for(var i=row;i<noofRows;++i){
+            result.push(matrix[i][noofColumns-1]);
+        }
+        noofColumns = noofColumns-1;
+
+        if(row <noofRows){
+            for(var j=noofColumns-1;j>=column;--j){
+                result.push(matrix[noofRows-1][j]);
+            }
+            noofRows = noofRows-1;
+        }
+        if(column< noofColumns){
+             for(var j=noofRows-1;j>=row;--j){
+                result.push(matrix[j][column]);
+    
+            }
+            column = column+1;
+
+        }
+    }
+     
+    
+    return result;
+    
+ 
